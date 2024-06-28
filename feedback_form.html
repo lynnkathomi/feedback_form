@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        input[type=text], input[type=email], textarea, input[type=number] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: orangered;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Feedback Form</h1>
+        <form id="feedback-form" method="POST" action="submit_feedback.php">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="feedback">Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="5" required></textarea>
+
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating" required>
+                <option value="">Select a rating</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Bad">Bad</option>
+                <option value="Worse">Worse</option>
+            </select>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var feedback = document.getElementById('feedback').value.trim();
+            var rating = document.getElementById('rating').value.trim();
+
+            var errorMessage = '';
+
+            if (name === '') {
+                errorMessage += 'Please enter your name.<br>';
+            }
+
+            if (email === '') {
+                errorMessage += 'Please enter your email address.<br>';
+            } else if (!isValidEmail(email)) {
+                errorMessage += 'Please enter a valid email address.<br>';
+            }
+
+            if (feedback === '') {
+                errorMessage += 'Please enter your feedback.<br>';
+            }
+            if (rating === '') {
+                errorMessage += 'Please select a rating.<br>';
+            } else if (!['Excellent', 'Good', 'Poor', 'Worse'].includes(rating)) {
+                errorMessage += 'Rating must be either Excellent, Good, Poor, or Worse.<br>';
+            }
+            }
+
+            if (errorMessage !== '') {
+                document.getElementById('error-message').innerHTML = errorMessage;
+            } else {
+                this.submit(); // Submit the form if no errors
+            }
+        });
+
+        function isValidEmail(email) {
+            // Simple email validation regex
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
+
+    
+</body>
+</html>
